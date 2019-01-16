@@ -1,13 +1,5 @@
 version: '3'
 services:
-  app:
-    build: .
-    command: ["go", "run", "main.go"]
-    volumes:
-      - .:/go/src/restapi
-    ports:
-      - "8080:8080"
-    
   db:
     image: postgres
     environment:
@@ -16,3 +8,13 @@ services:
       POSTGRES_PASSWORD: columbia
     ports:
       - 5432:5432
+  
+  app:
+    build: .
+    command: ["go", "run", "main.go"]
+    volumes:
+      - .:/go/src/restapi
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
