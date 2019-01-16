@@ -1,0 +1,9 @@
+
+FROM golang:1.8
+
+RUN mkdir -p /go/src/restapi
+WORKDIR /go/src/restapi
+
+ADD . /go/src/restapi
+
+RUN go get -v
