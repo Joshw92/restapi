@@ -1,9 +1,8 @@
 
-FROM golang:1.8
+FROM golang:1.11
 
-RUN mkdir -p /go/src/restapi
-WORKDIR /go/src/restapi
+WORKDIR /go/src/github.com/Joshw92/restapi
+RUN mkdir -p /go/src/github.com/Joshw92/restapi
+COPY main.go .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
 
-ADD . /go/src/restapi
-
-RUN go get -v
