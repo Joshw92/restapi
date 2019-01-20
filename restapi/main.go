@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"encoding/json"
 	"log"
 	"net/http"
@@ -56,8 +57,13 @@ func main() {
 	r := mux.NewRouter()
 
 	//Mock Data - @Todo - implement db
-	books = append(books, Book{ID: "1", Isbn: "448743", Title: "Book one", Author: &Author{Firstname: "Ben", Lastname: "Dover"}})
-	books = append(books, Book{ID: "2", Isbn: "528721", Title: "Book two", Author: &Author{Firstname: "Aneta", Lastname: "Gofradump"}})
+	//books = append(books, Book{ID: "1", Isbn: "448743", Title: "Book one", Author: &Author{Firstname: "Ben", Lastname: "Dover"}})
+	//books = append(books, Book{ID: "2", Isbn: "528721", Title: "Book two", Author: &Author{Firstname: "Aneta", Lastname: "Gofradump"}})
+	connStr := "user=dev dbname=postgres-dev sslmode=verify-full"
+	db, err := sql.Open("postgres", connStr)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// Endpoints
 	r.HandleFunc("/api/books", getBooks).Methods("GET")
