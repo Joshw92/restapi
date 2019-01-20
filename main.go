@@ -3,10 +3,12 @@ package main
 import (
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
+	_ "github.com/lib/pq"
 )
 
 // Book Struct (Model)
@@ -52,6 +54,14 @@ func deleteBook(w http.ResponseWriter, r *http.Request) {
 
 }
 
+const (
+	host     = "localhost"
+	port     = 5432
+	user     = "dev"
+	password = "columbia"
+	dbname   = "postgres-dev"
+)
+
 func main() {
 	// Init Router
 	r := mux.NewRouter()
@@ -59,11 +69,22 @@ func main() {
 	//Mock Data - @Todo - implement db
 	//books = append(books, Book{ID: "1", Isbn: "448743", Title: "Book one", Author: &Author{Firstname: "Ben", Lastname: "Dover"}})
 	//books = append(books, Book{ID: "2", Isbn: "528721", Title: "Book two", Author: &Author{Firstname: "Aneta", Lastname: "Gofradump"}})
-	connStr := "user=dev dbname=postgres-dev sslmode=verify-full"
-	db, err := sql.Open("postgres", connStr)
+	psqlInfo := fmt.Sprintf("host=localhost port=5432 user=dev "+
+		"password=columbia dbname=postgres-dev sslmode=disable",
+		host, port, user, password, dbname)
+
+	db, err := sql.Open("postgres", psqlInfo)
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
+	defer db.Close()
+
+	err = db.Ping()
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println("Successfully connected!")
 
 	// Endpoints
 	r.HandleFunc("/api/books", getBooks).Methods("GET")
