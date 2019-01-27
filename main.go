@@ -11,6 +11,14 @@ import (
 	_ "github.com/lib/pq"
 )
 
+const (
+	host     = "localhost"
+	port     = 5432
+	user     = "dev"
+	password = "columbia"
+	dbname   = "postgres-dev"
+)
+
 // Book Struct (Model)
 type Book struct {
 	ID     string  `json: "id"`
@@ -54,14 +62,6 @@ func deleteBook(w http.ResponseWriter, r *http.Request) {
 
 }
 
-const (
-	host     = "localhost"
-	port     = 5432
-	user     = "dev"
-	password = "columbia"
-	dbname   = "postgres-dev"
-)
-
 func main() {
 	// Init Router
 	r := mux.NewRouter()
@@ -69,8 +69,8 @@ func main() {
 	//Mock Data - @Todo - implement db
 	//books = append(books, Book{ID: "1", Isbn: "448743", Title: "Book one", Author: &Author{Firstname: "Ben", Lastname: "Dover"}})
 	//books = append(books, Book{ID: "2", Isbn: "528721", Title: "Book two", Author: &Author{Firstname: "Aneta", Lastname: "Gofradump"}})
-	psqlInfo := fmt.Sprintf("host=localhost port=5432 user=dev "+
-		"password=columbia dbname=postgres-dev sslmode=disable",
+	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
+		"password=%s dbname=%s sslmode=disable",
 		host, port, user, password, dbname)
 
 	db, err := sql.Open("postgres", psqlInfo)
