@@ -10,10 +10,7 @@ services:
       - 5432:5432
   
   app:
-    build: .
-    command: ["go", "run", "main.go"]
-    volumes:
-      - .:/go/src/restapi
+    image: de350860aff8
     ports:
       - "8080:8080"
     depends_on:
