@@ -14,9 +14,9 @@ import (
 const (
 	host     = "db"
 	port     = 5432
-	user     = "dev"
+	user     = "postgres-dev"
 	password = "columbia"
-	dbname   = "postgres-dev"
+	dbname   = "dev"
 )
 
 // Book Struct (Model)
