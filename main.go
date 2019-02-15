@@ -39,6 +39,7 @@ var books []Book
 // Get All Books
 func getBooks(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
+	fmt.Println("???")
 	json.NewEncoder(w).Encode(books)
 }
 
@@ -63,9 +64,6 @@ func deleteBook(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	// Init Router
-	r := mux.NewRouter()
-
 	//Mock Data - @Todo - implement db
 	//books = append(books, Book{ID: "1", Isbn: "448743", Title: "Book one", Author: &Author{Firstname: "Ben", Lastname: "Dover"}})
 	//books = append(books, Book{ID: "2", Isbn: "528721", Title: "Book two", Author: &Author{Firstname: "Aneta", Lastname: "Gofradump"}})
@@ -85,6 +83,9 @@ func main() {
 	}
 
 	fmt.Println("Successfully connected!")
+
+	// Init Router
+	r := mux.NewRouter()
 
 	// Endpoints
 	r.HandleFunc("/api/books", getBooks).Methods("GET")

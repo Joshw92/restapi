@@ -4,13 +4,15 @@ services:
     image: postgres
     environment:
       POSTGRES_DB: dev
-      POSTGRES_USER: postgres-dev
+      POSTGRES_USER: "postgres-dev"
       POSTGRES_PASSWORD: columbia
     ports:
       - 5432:5432
   
   app:
-    image: de350860aff8
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8080:8080"
     depends_on:

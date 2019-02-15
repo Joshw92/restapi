@@ -7,8 +7,8 @@ RUN chmod +x /usr/bin/dep
 WORKDIR /go/src/github.com/Joshw92/
 COPY main.go .
 COPY Gopkg.toml Gopkg.lock ./
-RUN dep ensure --vendor-only
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
+RUN dep ensure --vendor-only && \
+	CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
 
 FROM alpine:latest  
 WORKDIR /root/
