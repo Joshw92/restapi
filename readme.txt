@@ -1,0 +1,1 @@
+run `Docker-compose build && docker-compose up`
